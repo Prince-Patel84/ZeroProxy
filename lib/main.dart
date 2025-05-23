@@ -14,21 +14,68 @@ import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ZeroProxyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ZeroProxyApp extends StatelessWidget {
+  const ZeroProxyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ZeroProxy',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF0E0E2C),
+        primaryColor: Colors.cyanAccent,
+        colorScheme: ColorScheme.dark(
+          primary: Colors.cyanAccent,
+          secondary: Colors.cyan,
+        ),
+        fontFamily: 'Orbitron',
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.cyanAccent,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 16,
+            color: Colors.white70,
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFF1A1A40),
+          labelStyle: const TextStyle(color: Colors.cyanAccent),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.cyanAccent),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.cyanAccent, width: 2),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.cyanAccent,
+            foregroundColor: Colors.black,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: "Student Registration"), // Replace with your main widget
     );
   }
 }
@@ -165,6 +212,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _uploadSuccess = false;
   bool _isProcessing = false;
   final bool _isFrontCamera = false;
+  bool _showPassword = false;
+
 
   @override
   void initState() {
@@ -368,11 +417,20 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.primary.withAlpha((0.1 * 255).toInt()),
         title: Text(widget.title),
       ),
       body: Stack(
         children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
           Center(
             child: SingleChildScrollView(
               child: Column(
@@ -384,8 +442,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       return FutureBuilder<Size>(
                         future: _getImageSize(_image!),
                         builder: (context, snapshot) {
-                          if (!snapshot.hasData) return CircularProgressIndicator();
-
+                          if (!snapshot.hasData) return const CircularProgressIndicator();
                           final imageSize = snapshot.data!;
                           final displayedWidth = constraints.maxWidth;
                           final displayedHeight = displayedWidth * imageSize.height / imageSize.width;
@@ -410,71 +467,87 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   )
-                      : Icon(Icons.image, size: 150),
+                      : const Icon(Icons.image_outlined, size: 150, color: Colors.white70),
 
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   ElevatedButton(
-                    onPressed: () async {
-                      await captureAndDetect();
-                    },
-                    child: Text("Capture The Image"),
+                    onPressed: () async => await captureAndDetect(),
+                    child: const Text("Capture The Image"),
                   ),
 
                   if (_croppedFaces.isNotEmpty) ...[
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Wrap(
                         spacing: 10,
                         runSpacing: 10,
                         children: _croppedFaces.map((face) {
-                          return Image.memory(
-                            face.bytes,
-                            width: 100,
-                            height: 100,
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.memory(
+                              face.bytes,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
                           );
                         }).toList(),
                       ),
                     ),
 
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                    // Student ID input
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40.0),
                       child: TextField(
                         controller: studentIdController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Student ID',
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        decoration: const InputDecoration(labelText: 'Student ID'),
                       ),
                     ),
 
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                    // Password input
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40.0),
                       child: TextField(
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: !_showPassword,
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
                           labelText: 'Password',
+                          labelStyle: const TextStyle(color: Colors.cyanAccent),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.cyanAccent),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.cyan),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _showPassword ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.cyanAccent,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _showPassword = !_showPassword;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ),
 
-                    SizedBox(height: 20),
+
+                    const SizedBox(height: 20),
 
                     ElevatedButton(
                       onPressed: () async {
                         if (_image == null) {
-                          print("No image selected or captured");
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Please select or capture an image")),
+                            const SnackBar(content: Text("Please select or capture an image")),
                           );
                           return;
                         }
@@ -486,8 +559,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           faceEmbeddings: _faceEmbeddings,
                         );
                       },
-                      child: Text('Send Embeddings'),
+                      child: const Text('Send Embeddings'),
                     ),
+                    const SizedBox(height: 20),
                   ],
                 ],
               ),
@@ -496,17 +570,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
           if (_isProcessing)
             Container(
-              color: Colors.black.withAlpha((0.5 * 255).round()),
-              child: Center(
+              color: Colors.black.withAlpha((0.5 * 255).toInt()),
+              child: const Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    CircularProgressIndicator(),
+                  children: [
+                    CircularProgressIndicator(color: Colors.cyanAccent),
                     SizedBox(height: 20),
-                    Text(
-                      "Processing...",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
+                    Text("Processing...", style: TextStyle(color: Colors.white, fontSize: 18)),
                   ],
                 ),
               ),

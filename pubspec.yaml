@@ -1,6 +1,6 @@
 name: "ZeroProxy"
 description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.8
   image_picker: ^1.1.2
   google_mlkit_face_detection: ^0.13.1
@@ -23,7 +22,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^5.0.0
 
 flutter:
@@ -32,6 +30,14 @@ flutter:
 
   assets:
     - assets/
+
+  fonts:
+    - family: Orbitron
+      fonts:
+        - asset: fonts/Orbitron-Regular.ttf
+        - asset: fonts/Orbitron-Bold.ttf
+          weight: 700
+
 flutter_icons:
   android: true
   ios: true
