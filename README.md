@@ -31,6 +31,7 @@ The complete ZeroProxy ecosystem is split into three distinct, specialized codeb
 
 ZeroProxy derives its value by integrating totally different components that cannot solve the problem on their own, transforming them into a unified, high-security problem-solving engine:
 
+```mermaid
 graph TD
     Cloud["University Wi-Fi Network<br>(Cloud Data Sync Pipeline)"]
     Pi["Local Raspberry Pi Server"]
@@ -44,3 +45,4 @@ graph TD
     Pi <-->|"eth0 Static LAN Gate: 172.16.0.1"| Router
     Router <-->|"Isolated Hotspot Broadcast"| App
     App -->|"Encrypted SHA256 Signature"| Auth
+```
