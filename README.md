@@ -23,7 +23,7 @@ ZeroProxy is an end-to-end, high-concurrency hardware-software ecosystem designe
 
 ## 📂 System Component Directory
 
-The complete ZeroProxy ecosystem is split into three distinct, specialized codebases built with Clean Architecture principles. Navigate to the respective repositories below to view the source code and localized documentation:
+The complete ZeroProxy ecosystem is split into three distinct, specialized codebases built with Feature-First Architecture. Navigate to the respective repositories below to view the source code and localized documentation:
 
 * [**ZeroProxy Backend Server**](https://github.com/Prince-Patel84/zeroproxy-server)
   * **Core Tech:** Node.js, PostgreSQL (BCNF Normalized), Redis Cache, Bash Shell Scripting, Nodemailer (SMTP).
@@ -35,7 +35,7 @@ The complete ZeroProxy ecosystem is split into three distinct, specialized codeb
 
 * [**ZeroProxy Admin Mobile App**](https://github.com/Prince-Patel84/zeroproxy-admin-app)
   * **Core Tech:** Flutter, Dart, Secure HTTP Client Pinning, Native File Dialogs.
-  * **Role:** Help Attendance Staff to register students (triggering automated credential emails), instantiate live Socket.IO tracking windows, monitor real-time authentication feeds, and export the day's attendance directly to Google Sheets with a single click.
+  * **Role:** Help Attendance Staff to register students (triggering automated credential emails), start attendance sessions, monitor real-time attendance marking, and export the day's attendance directly to Google Sheets with a single click.
 
 ---
 
