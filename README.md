@@ -1,11 +1,23 @@
 # ZeroProxy: Smart Attendance & Edge-AI Ecosystem
 
+<p align="center">
+  <img src="metadata/Zeroproxy_Banner.png"alt="ZeroProxy_Banner" />
+</p>
+
 ZeroProxy is an end-to-end, high-concurrency hardware-software ecosystem designed as a solo initiative to eliminate proxy attendance in large institutional environments. By combining discrete technologies—including edge computing, local networking, cross-platform mobile architecture, and localized machine learning—the system drastically optimizes operational workflows. 
 
 ### ⚡ The Impact
 * **Speed Efficiency:** Processes authentication for a **150-student class in roughly 3 minutes**, replacing traditional fingerprint scanning methods that average up to 30 minutes.
 * **Gamified Anti-Spoofing:** Defeats photo and video attacks using interactive liveness detection. Users control a "Fruit Catcher" game via real-time head tracking, while a background AI model continuously validates their biometric identity.
 * **Smart Resource Scaling:** Offloads heavy biometric vectorization to client edge-devices, allowing a low-powered, cost-effective Raspberry Pi to seamlessly handle massive concurrent request spikes without server-side performance degradation.
+
+---
+
+### Image:
+
+<p align="center">
+  <img src="metadata/Project_Image.jpg"alt="Project_Image" />
+</p>
 
 ---
 
@@ -27,6 +39,15 @@ The complete ZeroProxy ecosystem is split into three distinct, specialized codeb
 
 ---
 
+## [**To Watch The Demo Click Here.**](https://youtu.be/gKqsvI6S5E4?si=dC2S-zePrRjLOObu&t=162)
+
+---
+
+<p align="center">
+  <img src="metadata/ZeroProxy_Performance_Benchmarks.png"alt="Performance_Benchmarks" />
+</p>
+
+---
 ## 🛠️ Integrated Systems Architecture
 
 ZeroProxy derives its value by integrating totally different components that cannot solve the problem on their own, transforming them into a unified, high-security problem-solving engine:
